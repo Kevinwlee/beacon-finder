@@ -105,27 +105,13 @@
     
 }
 
-/*
- *  locationManager:rangingBeaconsDidFailForRegion:withError:
- *
- *  Discussion:
- *    Invoked when an error has occurred ranging beacons in a region. Error types are defined in "CLError.h".
- */
-- (void)locationManager:(CLLocationManager *)manager
-rangingBeaconsDidFailForRegion:(CLBeaconRegion *)region
-              withError:(NSError *)error {
+- (void)locationManager:(CLLocationManager *)manager rangingBeaconsDidFailForRegion:(CLBeaconRegion *)region withError:(NSError *)error {
     NSLog(@"rangingBeaconsDidFailForRegion");
 }
 
-/*
- *  locationManager:didEnterRegion:
- *
- *  Discussion:
- *    Invoked when the user enters a monitored region.  This callback will be invoked for every allocated
- *    CLLocationManager instance with a non-nil delegate that implements this method.
- */
 - (void)locationManager:(CLLocationManager *)manager
          didEnterRegion:(CLRegion *)region {
+
     self.statusLabel.text = @"Did Enter Region";
 
     if ([region isKindOfClass:[CLBeaconRegion class]]) {
@@ -134,51 +120,10 @@ rangingBeaconsDidFailForRegion:(CLBeaconRegion *)region
 
 }
 
-/*
- *  locationManager:didExitRegion:
- *
- *  Discussion:
- *    Invoked when the user exits a monitored region.  This callback will be invoked for every allocated
- *    CLLocationManager instance with a non-nil delegate that implements this method.
- */
 - (void)locationManager:(CLLocationManager *)manager
           didExitRegion:(CLRegion *)region {
     
     self.statusLabel.text = @"Did Exit Region";
 }
-
-/*
- *  locationManager:didFailWithError:
- *
- *  Discussion:
- *    Invoked when an error has occurred. Error types are defined in "CLError.h".
- */
-//- (void)locationManager:(CLLocationManager *)manager
-//       didFailWithError:(NSError *)error {
-//    
-//}
-
-/*
- *  locationManager:monitoringDidFailForRegion:withError:
- *
- *  Discussion:
- *    Invoked when a region monitoring error has occurred. Error types are defined in "CLError.h".
- */
-//- (void)locationManager:(CLLocationManager *)manager
-//monitoringDidFailForRegion:(CLRegion *)region
-//              withError:(NSError *)error {
-//    
-//}
-
-/*
- *  locationManager:didStartMonitoringForRegion:
- *
- *  Discussion:
- *    Invoked when a monitoring for a region started successfully.
- */
-//- (void)locationManager:(CLLocationManager *)manager
-//didStartMonitoringForRegion:(CLRegion *)region {
-//    
-//}
 
 @end
