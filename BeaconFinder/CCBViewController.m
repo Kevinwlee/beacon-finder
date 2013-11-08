@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *proximity;
 @property (weak, nonatomic) IBOutlet UILabel *accuracyLabel;
 @property (nonatomic, strong)CLBeaconRegion *beaconRegion;
+@property (weak, nonatomic) IBOutlet UILabel *rssiLabel;
 @end
 
 @implementation CCBViewController
@@ -22,20 +23,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
+
     NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:@"E2C56DB5-DFFB-48D2-B060-8876223462A3"];
     self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID identifier:@"SampleBeacon"];
+    
     [self.locationManager startMonitoringForRegion:self.beaconRegion];
     [self.locationManager requestStateForRegion:self.beaconRegion];
 }
 
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)checkBeacon:(id)sender {
@@ -96,7 +97,8 @@
     NSLog(@"Beacon Minor %@", [beacon.minor stringValue]);
     NSLog(@"Beacon Accuracy %f", beacon.accuracy);
     self.proximity.text = [self stringForProximity:beacon.proximity];
-    self.accuracyLabel.text = [NSString stringWithFormat:@"%f", beacon.accuracy];
+    self.accuracyLabel.text = [NSString stringWithFormat:@"accuracy %f", beacon.accuracy];
+    self.rssiLabel.text = [NSString stringWithFormat:@"RSSI %d", beacon.rssi];
     
 }
 
