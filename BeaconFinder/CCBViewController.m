@@ -16,6 +16,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *accuracyLabel;
 @property (nonatomic, strong)CLBeaconRegion *beaconRegion;
 @property (weak, nonatomic) IBOutlet UILabel *rssiLabel;
+@property (weak, nonatomic) IBOutlet UILabel *proximityUUIDLabel;
+@property (weak, nonatomic) IBOutlet UILabel *majorLabel;
+@property (weak, nonatomic) IBOutlet UILabel *minorLabel;
+
 @end
 
 @implementation CCBViewController
@@ -91,14 +95,13 @@
         didRangeBeacons:(NSArray *)beacons
                inRegion:(CLBeaconRegion *)region {
     
-    NSLog(@"Did Range Beacons");
-    CLBeacon *beacon  = [beacons lastObject];
-    NSLog(@"Beacon Major %@", [beacon.major stringValue]);
-    NSLog(@"Beacon Minor %@", [beacon.minor stringValue]);
-    NSLog(@"Beacon Accuracy %f", beacon.accuracy);
-    self.proximity.text = [self stringForProximity:beacon.proximity];
-    self.accuracyLabel.text = [NSString stringWithFormat:@"accuracy %f", beacon.accuracy];
-    self.rssiLabel.text = [NSString stringWithFormat:@"RSSI %d", beacon.rssi];
+    CLBeacon *lastBeacon  = [beacons lastObject];
+    self.proximityUUIDLabel.text = [lastBeacon.proximityUUID UUIDString];
+    self.majorLabel.text = [NSString stringWithFormat:@"Major %@", [lastBeacon.major stringValue]];
+    self.minorLabel.text = [NSString stringWithFormat:@"Minor %@", [lastBeacon.minor stringValue]];
+    self.proximity.text = [self stringForProximity:lastBeacon.proximity];
+    self.accuracyLabel.text = [NSString stringWithFormat:@"accuracy %f", lastBeacon.accuracy];
+    self.rssiLabel.text = [NSString stringWithFormat:@"RSSI %ld", (long)lastBeacon.rssi];
     
 }
 
@@ -111,7 +114,7 @@
 - (void)locationManager:(CLLocationManager *)manager
 rangingBeaconsDidFailForRegion:(CLBeaconRegion *)region
               withError:(NSError *)error {
-    
+    NSLog(@"rangingBeaconsDidFailForRegion");
 }
 
 /*
