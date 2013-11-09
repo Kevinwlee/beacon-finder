@@ -31,9 +31,12 @@
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
 
-    NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:@"E2C56DB5-DFFB-48D2-B060-8876223462A3"];
+//    NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:@"E2C56DB5-DFFB-48D2-B060-8876223462A3"];
+    //A52E0A46-E60C-40F9-99FC-F2B69DA7076C
+    NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:@"A52E0A46-E60C-40F9-99FC-F2B69DA7076C"];
     self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID identifier:@"SampleBeacon"];
-    
+    self.beaconRegion.notifyOnEntry = YES;
+    self.beaconRegion.notifyOnExit = YES;
     [self.locationManager startMonitoringForRegion:self.beaconRegion];
     [self.locationManager requestStateForRegion:self.beaconRegion];
 }
@@ -94,6 +97,8 @@
 - (void)locationManager:(CLLocationManager *)manager
         didRangeBeacons:(NSArray *)beacons
                inRegion:(CLBeaconRegion *)region {
+    
+    NSLog(@"Beacon Count %ld", beacons.count);
     
     CLBeacon *lastBeacon  = [beacons lastObject];
     self.proximityUUIDLabel.text = [lastBeacon.proximityUUID UUIDString];
